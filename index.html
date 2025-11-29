@@ -805,7 +805,7 @@
     <div class="container">
         <!-- Step 1: Name Input -->
         <div class="step active" id="step1">
-            <div class="Agraham-text">birthday celebration by suraj bhai</div>
+            <div class="message">birthday celebration by suraj bhai</div>
             <h1>ℍ𝕒𝕡𝕡𝕪 𝕓𝕚𝕣𝕥𝕙𝕕𝕒𝕪!</h1>
 
             <div class="message-container">
@@ -1455,31 +1455,24 @@
         
         // Start celebration
         function startCelebration() {
-            const nameInput = document.getElementById('birthdayNameInput');
-            if (nameInput.value.trim() !== '') {
-                userName = nameInput.value.trim();
-            }
-            
-            // Update all name displays
-            document.querySelectorAll('.birthday-person').forEach(el => {
-                el.textContent = userName;
+            // Hide step1
+            document.getElementById('step1').style.display = 'none';
+            // Show step2
+            document.getElementById('step2').style.display = 'block';
+            // Play music
+            const music = document.getElementById('birthdayMusic');
+            music.play().catch(e => {
+                alert("Click anywhere to start music!");
             });
-            
-            // Initialize audio and start music
-            initializeAudio();
-            
-            // Start music with a small delay to ensure audio context is ready
-            setTimeout(() => {
-                music.play().then(() => {
-                    console.log("Music started successfully");
-                    musicPlaying = true;
-                    musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
-                }).catch(e => {
-                    console.log("Audio play failed:", e);
-                    // If autoplay fails, show a message to user
-                    alert("Please click the music button to start the birthday song!");
-                });
-            }, 500);
+        }
+        function nextStep(stepNumber) {
+            // Hide all steps
+            for(let i = 1; i <= 15; i++) {
+                document.getElementById('step' + i).style.display = 'none';
+            }
+            // Show current step
+            document.getElementById('step' + stepNumber).style.display = 'block';
+        }
             
             // Move to next step
             nextStep(2);
